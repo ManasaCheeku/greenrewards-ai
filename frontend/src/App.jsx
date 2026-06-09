@@ -9,9 +9,12 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Assessment from './pages/Assessment';
 import Dashboard from './pages/Dashboard';
+import EmployeeDashboard from './pages/EmployeeDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 import Rewards from './pages/Rewards';
 import Profile from './pages/Profile';
 import Transportation from './pages/Transportation';
+import UploadProof from './pages/UploadProof';
 
 // Main layout with navbar
 function MainLayout() {
@@ -43,9 +46,12 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/assessment" element={<ProtectedRoute element={<Assessment />} />} />
             <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+            <Route path="/employee" element={<ProtectedRoute element={<EmployeeDashboard />} />} />
+            <Route path="/admin" element={<ProtectedRoute element={<AdminDashboard />} />} />
             <Route path="/rewards" element={<ProtectedRoute element={<Rewards />} />} />
             <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
             <Route path="/transportation" element={<ProtectedRoute element={<Transportation />} />} />
+            <Route path="/upload-proof" element={<ProtectedRoute element={<UploadProof />} />} />
           </Route>
         </Routes>
       </Router>

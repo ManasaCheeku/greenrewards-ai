@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { Award, Gift, ChevronRight, CheckCircle2, AlertCircle, Shield, Footprints, Droplet, Zap, Leaf } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Award, Gift, CheckCircle2, AlertCircle, Shield, Footprints, Droplet, Zap, Leaf } from 'lucide-react';
 import { calculateEcoPoints, getAchievements } from '../utils/calculations';
 import { auth } from '../utils/auth';
 

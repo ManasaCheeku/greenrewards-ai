@@ -1,16 +1,88 @@
-# React + Vite
+# GreenRewards AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Problem Statement
 
-Currently, two official plugins are available:
+Employees and individuals need an easy way to track, verify, and get rewarded for sustainable actions that reduce their carbon footprint.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Solution Overview
 
-## React Compiler
+* Users upload proofs (tickets, receipts, photos, bills).
+* An AI verifier extracts text/images, classifies the proof, estimates carbon savings, and awards points.
+* Dashboards, leaderboards, badges, and recommendations encourage sustainable behavior.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Architecture
 
-## Expanding the ESLint configuration
+* Frontend: React + Vite
+* Backend: FastAPI + SQLAlchemy
+* Database: SQLite
+* AI Layer: OCR + Sustainability Verification Engine
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## AI Workflow
+
+1. Upload proof
+2. OCR/Text extraction
+3. Sustainability verification
+4. Carbon savings estimation
+5. Reward allocation
+6. Dashboard update
+
+## Features
+
+* Carbon Footprint Tracking
+* Carbon Confidence Score
+* Green Rewards & Badges
+* Sustainability Campaigns
+* Walking Challenges
+* AI Verification
+* Leaderboards
+* Dashboard Analytics
+
+## Security
+
+* JWT Authentication
+* File Validation
+* Upload Verification
+* Environment-Based Configuration
+
+## Running Backend
+
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+## Running Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Testing
+
+```powershell
+cd backend
+pytest -q
+```
+
+### Test Status
+
+* Backend Tests: 22 Passed
+* Backend Coverage: 79%
+* Frontend Tests: Passed
+
+## Future Scope
+
+* Enhanced Sustainability Verification
+* Advanced Carbon Analytics
+* Improved Accessibility
+* Expanded Campaign System
+* Production Security Hardening
+
+## Green Rewards AI v2.0
+
+Focused on stability, testing, security review, code quality improvements, and production readiness.

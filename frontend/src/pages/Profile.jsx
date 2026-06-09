@@ -11,6 +11,10 @@ export default function Profile() {
     name: user?.name || '',
     email: user?.email || ''
   });
+  const [memberDays] = useState(() => {
+    if (!user?.createdAt) return 0;
+    return Math.floor((Date.now() - new Date(user.createdAt).getTime()) / 86400000);
+  });
 
   if (!user) {
     navigate('/login');
@@ -229,7 +233,7 @@ export default function Profile() {
                     <Leaf size={16} className="text-primary-400" />
                     <span className="font-semibold text-sm text-white">Growing Impact</span>
                   </div>
-                  <p className="text-xs text-gray-400">Member for {/* eslint-disable-next-line react-hooks/rules-of-hooks */} {Math.floor((Date.now() - new Date(user.createdAt).getTime()) / 86400000)} days</p>
+                  <p className="text-xs text-gray-400">Member for {memberDays} days</p>
                 </div>
                 <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <div className="flex items-center gap-2 mb-1">

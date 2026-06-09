@@ -4,3 +4,9 @@ sqlalchemy==2.0.30
 pydantic==2.7.1
 python-multipart==0.0.9
 cors==1.0.1
+pillow==10.0.0
+pytesseract==0.3.10
+python-jose==3.3.0
+passlib[bcrypt]==1.7.5
+pytest==7.4.0
+pytest-cov==4.1.0

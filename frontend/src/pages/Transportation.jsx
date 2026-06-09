@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Bus, Train, Car, Navigation, Bike, AlertCircle, CheckCircle2 } from 'lucide-react';
+
+const USER_ID = 1;
 
 export default function Transportation() {
   const [transportType, setTransportType] = useState('bus');
@@ -9,30 +11,40 @@ export default function Transportation() {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [ecoPoints, setEcoPoints] = useState(0);
-  const USER_ID = 1;
 
-  useEffect(() => {
-    fetchUserData();
-    fetchHistory();
-  }, []);
-
-  const fetchUserData = async () => {
-    try {
-      const res = await axios.get(`http://localhost:8000/users/${USER_ID}`);
-      setEcoPoints(res.data.eco_points);
-    } catch (err) {
-      console.log("User not found, you might need to create it first", err);
-    }
-  };
-
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
     try {
       const res = await axios.get(`http://localhost:8000/users/${USER_ID}/transportations/`);
       setHistory(res.data);
     } catch (err) {
       console.log("Error fetching history", err);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadInitialData() {
+      try {
+        const userRes = await axios.get(`http://localhost:8000/users/${USER_ID}`);
+        if (!cancelled) setEcoPoints(userRes.data.eco_points);
+      } catch (err) {
+        console.log("User not found, you might need to create it first", err);
+      }
+
+      try {
+        const historyRes = await axios.get(`http://localhost:8000/users/${USER_ID}/transportations/`);
+        if (!cancelled) setHistory(historyRes.data);
+      } catch (err) {
+        console.log("Error fetching history", err);
+      }
+    }
+
+    loadInitialData();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,15 +58,14 @@ export default function Transportation() {
 
     try {
       const res = await axios.post(`http://localhost:8000/users/${USER_ID}/transportations/`, {
-        user_id: USER_ID,
-        transport_mode: transportType,
-        distance: Number(distance),
+        type: transportType,
+        distance_km: Number(distance),
       });
       setStatus({ type: 'success', message: `Great! You earned ${res.data.eco_points_earned} Eco Points!` });
-      setEcoPoints(ecoPoints + res.data.eco_points_earned);
+      setEcoPoints(prev => prev + res.data.eco_points_earned);
       setDistance('');
       fetchHistory();
-    } catch (err) {
+    } catch {
       setStatus({ type: 'error', message: 'Failed to log activity. Please try again.' });
     } finally {
       setLoading(false);
@@ -153,8 +164,8 @@ export default function Transportation() {
                   {history.map((entry, i) => (
                     <div key={i} className="p-4 bg-black/20 rounded-lg border border-white/5 flex items-center justify-between">
                       <div>
-                        <div className="font-semibold capitalize">{entry.transport_mode}</div>
-                        <div className="text-sm text-gray-400">{entry.distance} km</div>
+                        <div className="font-semibold capitalize">{entry.type}</div>
+                        <div className="text-sm text-gray-400">{entry.distance_km} km</div>
                       </div>
                       <div className="text-xl font-bold text-primary-400">+{entry.eco_points_earned}</div>
                     </div>
